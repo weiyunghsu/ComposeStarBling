@@ -5,17 +5,12 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
@@ -27,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.weiyung.compose.ui.theme.ComposeTheme
 import com.weiyung.compose.ui.theme.Purple40
-import java.util.Collections.rotate
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,20 +39,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+// 1.讓星星變大80dp
+// 2.改變星星變成實心
+// 3.三個方塊分散對齊
+// 4.按左右旋轉紐讓星星旋轉
 @Composable
 fun StarChangeColor() {
-    Column(verticalArrangement = Arrangement.Center,
+    // 存一個狀態，當點擊時會旋轉
+    Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
+
         IconButton(
             onClick = {
                 Log.d("AAA","Star clicked.")},
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_icon_star0),
-//                tint = Yellow,
-                modifier = Modifier.defaultMinSize(80.dp,80.dp),
-//                .size(80.dp),
+                tint = Yellow,
+                modifier = Modifier
+                    .height(80.dp).width(80.dp),
                 contentDescription = null
             )
         }
@@ -95,7 +94,7 @@ fun StarChangeColor() {
             }
         }
 
-        Row(horizontalArrangement = Arrangement.SpaceAround) {
+        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
             Box() {
                 Canvas(modifier = Modifier
                     .size(80.dp)
