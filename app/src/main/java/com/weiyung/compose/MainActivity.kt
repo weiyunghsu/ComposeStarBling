@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,12 +48,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun StarChangeColor() {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val color = if (isPressed) Blue else Green
-
     Column(verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally) {
         IconButton(
             onClick = {
                 Log.d("AAA","Star clicked.")},
@@ -59,9 +57,8 @@ fun StarChangeColor() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_icon_star0),
 //                tint = Yellow,
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+                modifier = Modifier.defaultMinSize(80.dp,80.dp),
+//                .size(80.dp),
                 contentDescription = null
             )
         }
@@ -77,8 +74,15 @@ fun StarChangeColor() {
                     contentDescription = null
                 )
             }
-            Text(text = "default",
-                color = Purple40)
+            Button(
+                onClick = {Log.d("AAA", "button default clicked.")},
+                colors = ButtonDefaults.buttonColors(
+                    White,
+                    contentColor = Purple40
+                ),
+            ) {
+                Text("default")
+            }
             IconButton(
                 onClick = {
                     Log.d("AAA","Redo clicked.")},
@@ -91,7 +95,7 @@ fun StarChangeColor() {
             }
         }
 
-        Row() {
+        Row(horizontalArrangement = Arrangement.SpaceAround) {
             Box() {
                 Canvas(modifier = Modifier
                     .size(80.dp)
