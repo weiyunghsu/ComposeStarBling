@@ -100,16 +100,35 @@ fun StarChangeColor() {
                         drawRect(
                             color = Blue,
                         )
-
                     })
-            }
-            Box() {
                 Canvas(modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+                    .size(80.dp),
                     onDraw = {
-                        drawRect(
-                            color = Green
+                        val canvasWidth = size.width
+                        val canvasHeight = size.height
+                        drawLine(
+                            start = Offset(x = 0F, y = 0F),
+                            end = Offset(x = 0F, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = 0F, y = 0F),
+                            end = Offset(x = canvasWidth, y = 0F),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = canvasWidth, y = 0F),
+                            end = Offset(x = canvasWidth, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = 0F, y = canvasHeight),
+                            end = Offset(x = canvasWidth, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
                         )
                     })
             }
@@ -119,14 +138,51 @@ fun StarChangeColor() {
                     .padding(8.dp),
                     onDraw = {
                         drawRect(
-                            color = Red
+                            color = Green,
+                        )
+                    })
+                Canvas(modifier = Modifier
+                    .size(80.dp),
+                    onDraw = {
+                        val canvasWidth = size.width
+                        val canvasHeight = size.height
+                        drawLine(
+                            start = Offset(x = 0F, y = 0F),
+                            end = Offset(x = 0F, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = 0F, y = 0F),
+                            end = Offset(x = canvasWidth, y = 0F),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = canvasWidth, y = 0F),
+                            end = Offset(x = canvasWidth, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
+                        )
+                        drawLine(
+                            start = Offset(x = 0F, y = canvasHeight),
+                            end = Offset(x = canvasWidth, y = canvasHeight),
+                            color = Black,
+                            strokeWidth = 2F
                         )
                     })
             }
             Box() {
                 Canvas(modifier = Modifier
                     .size(80.dp)
-                    .padding(4.dp),
+                    .padding(8.dp),
+                    onDraw = {
+                        drawRect(
+                            color = Red,
+                        )
+                    })
+                Canvas(modifier = Modifier
+                    .size(80.dp),
                     onDraw = {
                         val canvasWidth = size.width
                         val canvasHeight = size.height
