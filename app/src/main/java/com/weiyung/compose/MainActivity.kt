@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -39,31 +39,37 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-// 1.讓星星變大80dp
-// 2.改變星星變成實心
-// 3.三個方塊分散對齊
-// 4.按左右旋轉紐讓星星旋轉
 @Composable
 fun StarChangeColor() {
-    // 存一個狀態，當點擊時會旋轉
+//    var liked : Boolean = false
+//    val starClicked by remember {
+//        mutableStateOf(liked)
+//    }
     Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         IconButton(
+            modifier = Modifier.height(80.dp).width(80.dp),
             onClick = {
+//                liked = true
                 Log.d("AAA","Star clicked.")},
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_icon_star0),
+//                    id = if (starClicked) {
+//                        R.drawable.ic_icon_star1
+//                    } else {
+//                        R.drawable.ic_icon_star0
+//                    }),
                 tint = Yellow,
-                modifier = Modifier
-                    .height(80.dp).width(80.dp),
+                modifier = Modifier.height(80.dp).width(80.dp),
                 contentDescription = null
             )
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(
+                modifier = Modifier.height(50.dp).width(50.dp),
                 onClick = {
                     Log.d("AAA","Undo clicked.")},
             ) {
@@ -83,6 +89,7 @@ fun StarChangeColor() {
                 Text("default")
             }
             IconButton(
+                modifier = Modifier.height(50.dp).width(50.dp),
                 onClick = {
                     Log.d("AAA","Redo clicked.")},
             ) {
