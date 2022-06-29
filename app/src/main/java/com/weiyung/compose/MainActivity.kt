@@ -126,25 +126,25 @@ fun StarChangeColor() {
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = 0F, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = canvasWidth, y = 0F),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = canvasWidth, y = 0F),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = canvasHeight),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                     })
             }
@@ -165,25 +165,25 @@ fun StarChangeColor() {
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = 0F, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = canvasWidth, y = 0F),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = canvasWidth, y = 0F),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = canvasHeight),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                     })
             }
@@ -205,25 +205,25 @@ fun StarChangeColor() {
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = 0F, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = 0F),
                             end = Offset(x = canvasWidth, y = 0F),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = canvasWidth, y = 0F),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                         drawLine(
                             start = Offset(x = 0F, y = canvasHeight),
                             end = Offset(x = canvasWidth, y = canvasHeight),
                             color = Black,
-                            strokeWidth = 2F
+                            strokeWidth = 5F
                         )
                     })
             }
