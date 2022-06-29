@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -45,9 +46,13 @@ fun StarChangeColor() {
 //    val starClicked by remember {
 //        mutableStateOf(liked)
 //    }
-    Column(verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Canvas(modifier = Modifier.size(20.dp),
+            onDraw = {
+                drawRect(
+                    color = White,
+                )
+            })
         IconButton(
             modifier = Modifier.height(80.dp).width(80.dp),
             onClick = {
@@ -67,7 +72,9 @@ fun StarChangeColor() {
             )
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically) {
             IconButton(
                 modifier = Modifier.height(50.dp).width(50.dp),
                 onClick = {
@@ -101,18 +108,18 @@ fun StarChangeColor() {
             }
         }
 
-        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            Box() {
-                Canvas(modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+        Row(modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly) {
+            Box(Modifier.clickable {
+                Log.i("AAA", "Blue box clicked.")}
+            ) {
+                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Blue,
                         )
                     })
-                Canvas(modifier = Modifier
-                    .size(80.dp),
+                Canvas(modifier = Modifier.size(80.dp),
                     onDraw = {
                         val canvasWidth = size.width
                         val canvasHeight = size.height
@@ -142,17 +149,16 @@ fun StarChangeColor() {
                         )
                     })
             }
-            Box() {
-                Canvas(modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+            Box(Modifier.clickable {
+                Log.i("AAA", "Green box clicked.")}
+            ) {
+                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Green,
                         )
                     })
-                Canvas(modifier = Modifier
-                    .size(80.dp),
+                Canvas(modifier = Modifier.size(80.dp),
                     onDraw = {
                         val canvasWidth = size.width
                         val canvasHeight = size.height
@@ -182,10 +188,10 @@ fun StarChangeColor() {
                         )
                     })
             }
-            Box() {
-                Canvas(modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+            Box(Modifier.clickable {
+                Log.i("AAA", "Red box clicked.")}
+            ) {
+                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Red,
