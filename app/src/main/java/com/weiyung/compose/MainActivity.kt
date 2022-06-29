@@ -105,7 +105,7 @@ fun StarChangeColor() {
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
-                            targetValue = rotation.targetValue - 60,
+                            targetValue = rotation.targetValue - 30,
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
@@ -137,7 +137,7 @@ fun StarChangeColor() {
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
-                            targetValue = rotation.targetValue + 60,
+                            targetValue = rotation.targetValue + 30,
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
