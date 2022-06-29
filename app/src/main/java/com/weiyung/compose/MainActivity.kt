@@ -17,6 +17,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Magenta
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun StarChangeColor() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        var starStatus by remember { mutableStateOf(0) }
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
@@ -55,12 +57,16 @@ fun StarChangeColor() {
         IconButton(
             modifier = Modifier.height(80.dp).width(80.dp),
             onClick = {
+                starStatus = 1
                 Log.d("AAA","Star clicked.")},
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_icon_star0),
+                painter = painterResource(
+                    if (starStatus == 0) StarSelected.Star.icon
+                    else StarSelected.Star.iconSelected
+                        ),
                 modifier = Modifier.height(80.dp).width(80.dp),
-                tint = Yellow,
+                tint = Magenta,
                 contentDescription = null
             )
         }
@@ -231,4 +237,7 @@ fun DefaultPreview() {
     ComposeTheme {
         StarChangeColor()
     }
+}
+sealed class StarSelected(val icon: Int, val iconSelected: Int) {
+    object Star : StarSelected(R.drawable.ic_icon_star0, R.drawable.ic_icon_star1)
 }
