@@ -6,14 +6,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
@@ -21,7 +20,6 @@ import androidx.compose.ui.graphics.Color.Companion.Magenta
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,6 +46,8 @@ class MainActivity : ComponentActivity() {
 fun StarChangeColor() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         var starStatus by remember { mutableStateOf(0) }
+        var starColor by remember { mutableStateOf(0) }
+        var starRotateStatus by remember{ mutableStateOf(0)}
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
@@ -63,10 +63,19 @@ fun StarChangeColor() {
             Icon(
                 painter = painterResource(
                     if (starStatus == 0) StarSelected.Star.icon
-                    else StarSelected.Star.iconSelected
+                    else {
+                        StarSelected.Star.iconSelected
+                    }
                         ),
                 modifier = Modifier.height(80.dp).width(80.dp),
-                tint = Magenta,
+                tint =
+                when (starColor) {
+                    0 -> Magenta
+                    1 -> Blue
+                    2 -> Green
+                    3 -> Red
+                    else -> { }
+                } as Color,
                 contentDescription = null
             )
         }
@@ -86,7 +95,10 @@ fun StarChangeColor() {
                 )
             }
             Button(
-                onClick = {Log.d("AAA", "button default clicked.")},
+                onClick = {
+                    starStatus = 0
+                    starColor = 0
+                    Log.d("AAA", "button default clicked.")},
                 colors = ButtonDefaults.buttonColors(
                     White,
                     contentColor = Purple40
@@ -110,6 +122,7 @@ fun StarChangeColor() {
         Row(modifier = Modifier.fillMaxHeight().fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly) {
             Box(Modifier.clickable {
+                starColor = 1
                 Log.i("AAA", "Blue box clicked.")}
             ) {
                 Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
@@ -149,6 +162,7 @@ fun StarChangeColor() {
                     })
             }
             Box(Modifier.clickable {
+                starColor = 2
                 Log.i("AAA", "Green box clicked.")}
             ) {
                 Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
@@ -188,6 +202,7 @@ fun StarChangeColor() {
                     })
             }
             Box(Modifier.clickable {
+                starColor = 3
                 Log.i("AAA", "Red box clicked.")}
             ) {
                 Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
