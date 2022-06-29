@@ -57,6 +57,7 @@ fun StarChangeColor() {
         var flag by remember { mutableStateOf(true) }
         val rotation = remember { Animatable(0f) }
         val scope = rememberCoroutineScope()
+        val rotationValue = rotation.value.toInt()
 
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
@@ -64,8 +65,11 @@ fun StarChangeColor() {
                     color = Transparent,
                 )
             })
+        Text(text = "$rotationValue")
         IconButton(
-            modifier = Modifier.height(80.dp).width(80.dp),
+            modifier = Modifier
+                .height(80.dp)
+                .width(80.dp),
             onClick = {
                 starStatus = 1
                 Log.d("AAA","Star clicked.")},
@@ -77,7 +81,9 @@ fun StarChangeColor() {
                         StarSelected.Star.iconSelected
                     }
                         ),
-                modifier = Modifier.height(80.dp).width(80.dp)
+                modifier = Modifier
+                    .height(80.dp)
+                    .width(80.dp)
                     .rotate(rotation.value),
                 tint =
                 when (starColor) {
@@ -95,7 +101,9 @@ fun StarChangeColor() {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically) {
             IconButton(
-                modifier = Modifier.height(48.dp).width(48.dp),
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(48.dp),
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
@@ -125,7 +133,9 @@ fun StarChangeColor() {
                 Text("default")
             }
             IconButton(
-                modifier = Modifier.height(48.dp).width(48.dp),
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(48.dp),
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
@@ -143,13 +153,17 @@ fun StarChangeColor() {
             }
         }
 
-        Row(modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+        Row(modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly) {
             Box(Modifier.clickable {
                 starColor = 1
                 Log.i("AAA", "Blue box clicked.")}
             ) {
-                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Blue,
@@ -189,7 +203,9 @@ fun StarChangeColor() {
                 starColor = 2
                 Log.i("AAA", "Green box clicked.")}
             ) {
-                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Green,
@@ -229,7 +245,9 @@ fun StarChangeColor() {
                 starColor = 3
                 Log.i("AAA", "Red box clicked.")}
             ) {
-                Canvas(modifier = Modifier.size(80.dp).padding(8.dp),
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
                     onDraw = {
                         drawRect(
                             color = Red,
