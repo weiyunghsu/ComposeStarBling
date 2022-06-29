@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,6 +18,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.res.painterResource
@@ -42,32 +45,22 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun StarChangeColor() {
-//    var liked : Boolean = false
-//    val starClicked by remember {
-//        mutableStateOf(liked)
-//    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
-                    color = White,
+                    color = Transparent,
                 )
             })
         IconButton(
             modifier = Modifier.height(80.dp).width(80.dp),
             onClick = {
-//                liked = true
                 Log.d("AAA","Star clicked.")},
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_icon_star0),
-//                    id = if (starClicked) {
-//                        R.drawable.ic_icon_star1
-//                    } else {
-//                        R.drawable.ic_icon_star0
-//                    }),
-                tint = Yellow,
                 modifier = Modifier.height(80.dp).width(80.dp),
+                tint = Yellow,
                 contentDescription = null
             )
         }
@@ -76,7 +69,7 @@ fun StarChangeColor() {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically) {
             IconButton(
-                modifier = Modifier.height(50.dp).width(50.dp),
+                modifier = Modifier.height(48.dp).width(48.dp),
                 onClick = {
                     Log.d("AAA","Undo clicked.")},
             ) {
@@ -96,7 +89,7 @@ fun StarChangeColor() {
                 Text("default")
             }
             IconButton(
-                modifier = Modifier.height(50.dp).width(50.dp),
+                modifier = Modifier.height(48.dp).width(48.dp),
                 onClick = {
                     Log.d("AAA","Redo clicked.")},
             ) {
