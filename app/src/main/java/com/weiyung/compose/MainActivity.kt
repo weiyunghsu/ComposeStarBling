@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
@@ -25,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.weiyung.compose.ui.theme.ComposeTheme
 import com.weiyung.compose.ui.theme.Purple40
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +53,11 @@ fun StarChangeColor() {
         var starStatus by remember { mutableStateOf(0) }
         var starColor by remember { mutableStateOf(0) }
         var starRotateStatus by remember{ mutableStateOf(0)}
+
+        var flag by remember { mutableStateOf(true) }
+        val rotation = remember { Animatable(0f) }
+        val scope = rememberCoroutineScope()
+
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
@@ -67,7 +77,8 @@ fun StarChangeColor() {
                         StarSelected.Star.iconSelected
                     }
                         ),
-                modifier = Modifier.height(80.dp).width(80.dp),
+                modifier = Modifier.height(80.dp).width(80.dp)
+                    .rotate(rotation.value),
                 tint =
                 when (starColor) {
                     0 -> Magenta
@@ -86,7 +97,14 @@ fun StarChangeColor() {
             IconButton(
                 modifier = Modifier.height(48.dp).width(48.dp),
                 onClick = {
-                    Log.d("AAA","Undo clicked.")},
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = 300f,
+                            animationSpec = tween(500, easing = LinearEasing)
+                        )
+                    }
+                    Log.d("AAA","Undo clicked.")}
+
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_undo),
@@ -109,6 +127,12 @@ fun StarChangeColor() {
             IconButton(
                 modifier = Modifier.height(48.dp).width(48.dp),
                 onClick = {
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = 60f,
+                            animationSpec = tween(500, easing = LinearEasing)
+                        )
+                    }
                     Log.d("AAA","Redo clicked.")},
             ) {
                 Icon(
