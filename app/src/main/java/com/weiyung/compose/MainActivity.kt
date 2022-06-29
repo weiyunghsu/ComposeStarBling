@@ -77,9 +77,7 @@ fun StarChangeColor() {
             Icon(
                 painter = painterResource(
                     if (starStatus == 0) StarSelected.Star.icon
-                    else {
-                        StarSelected.Star.iconSelected
-                    }
+                    else StarSelected.Star.iconSelected
                         ),
                 modifier = Modifier
                     .height(80.dp)
@@ -107,7 +105,7 @@ fun StarChangeColor() {
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
-                            targetValue = 300f,
+                            targetValue = rotation.targetValue - 60,
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
@@ -139,7 +137,7 @@ fun StarChangeColor() {
                 onClick = {
                     scope.launch {
                         rotation.animateTo(
-                            targetValue = 60f,
+                            targetValue = rotation.targetValue + 60,
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
