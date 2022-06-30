@@ -9,6 +9,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,12 +25,16 @@ import androidx.compose.ui.graphics.Color.Companion.Magenta
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.input.pointer.consumeAllChanges
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.weiyung.compose.ui.theme.ComposeTheme
 import com.weiyung.compose.ui.theme.Purple40
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +64,9 @@ fun StarChangeColor() {
         val scope = rememberCoroutineScope()
         val rotationValue = rotation.value.toInt()
 
+        var offsetX by remember { mutableStateOf(0f) }
+        var offsetY by remember { mutableStateOf(0f) }
+
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
@@ -69,7 +77,15 @@ fun StarChangeColor() {
         IconButton(
             modifier = Modifier
                 .height(80.dp)
-                .width(80.dp),
+                .width(80.dp)
+                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        change.consume()
+                        offsetX += dragAmount.x
+                        offsetY += dragAmount.y
+                    }
+                },
             onClick = {
                 starStatus = 1
                 Log.d("AAA","Star clicked.")},
@@ -124,7 +140,7 @@ fun StarChangeColor() {
                     starColor = 0
                     Log.d("AAA", "button default clicked.")},
                 colors = ButtonDefaults.buttonColors(
-                    White,
+                    Transparent,
                     contentColor = Purple40
                 ),
             ) {
