@@ -87,6 +87,7 @@ fun StarChangeColor() {
                         change.consume()
                         offsetX += dragAmount.x
                         offsetY += dragAmount.y
+                        visible = true
                     }
                 },
             onClick = {
@@ -141,8 +142,8 @@ fun StarChangeColor() {
             }
             AnimatedVisibility(
                 visible = visible){
-                visible = !(starStatus == 0 && starColor == 0
-                        && offsetX == 0F && offsetY == 0F && rotation.targetValue == 0F)
+                visible = !(((starStatus == 0) && (starColor == 0)
+                        && (offsetX == 0f) && (offsetY == 0f) && (rotation.targetValue == 0F)))
                 Button(
                     onClick = {
                         starStatus = 0
