@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -59,12 +60,14 @@ fun StarChangeColor() {
         var starColor by remember { mutableStateOf(0) }
         var starRotateStatus by remember{ mutableStateOf(0)}
 
-        var rotation = remember { Animatable(0f) }
+        val rotation = remember { Animatable(0f) }
         val scope = rememberCoroutineScope()
-        var rotationValue = rotation.value.toInt()
+        val rotationValue = rotation.value.toInt()
 
         var offsetX by remember { mutableStateOf(0f) }
         var offsetY by remember { mutableStateOf(0f) }
+
+        var visible by remember { mutableStateOf(true) }
 
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
@@ -88,6 +91,7 @@ fun StarChangeColor() {
                 },
             onClick = {
                 starStatus = 1
+                visible = true
                 Log.d("AAA","Star clicked.")},
         ) {
             Icon(
@@ -125,6 +129,7 @@ fun StarChangeColor() {
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
+                    visible = true
                     Log.d("AAA","Undo clicked.")}
 
             ) {
@@ -134,25 +139,31 @@ fun StarChangeColor() {
                     contentDescription = null
                 )
             }
-            Button(
-                onClick = {
-                    starStatus = 0
-                    starColor = 0
-                    offsetX = 0F
-                    offsetY = 0F
-                    scope.launch {
-                        rotation.animateTo(
-                            targetValue = 0F,
-                            animationSpec = tween(0, easing = LinearEasing)
-                        )
-                    }
-                    Log.d("AAA", "button default clicked.")},
-                colors = ButtonDefaults.buttonColors(
-                    Transparent,
-                    contentColor = Purple40
-                ),
-            ) {
-                Text("default")
+            AnimatedVisibility(
+                visible = visible){
+                visible = !(starStatus == 0 && starColor == 0
+                        && offsetX == 0F && offsetY == 0F && rotation.targetValue == 0F)
+                Button(
+                    onClick = {
+                        starStatus = 0
+                        starColor = 0
+                        offsetX = 0F
+                        offsetY = 0F
+                        scope.launch {
+                            rotation.animateTo(
+                                targetValue = 0F,
+                                animationSpec = tween(0, easing = LinearEasing)
+                            )
+                        }
+                        visible = false
+                        Log.d("AAA", "button default clicked.")},
+                    colors = ButtonDefaults.buttonColors(
+                        Transparent,
+                        contentColor = Purple40
+                    ),
+                ) {
+                    Text("default")
+                }
             }
             IconButton(
                 modifier = Modifier
@@ -165,6 +176,7 @@ fun StarChangeColor() {
                             animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
+                    visible = true
                     Log.d("AAA","Redo clicked.")},
             ) {
                 Icon(
@@ -181,6 +193,7 @@ fun StarChangeColor() {
             horizontalArrangement = Arrangement.SpaceEvenly) {
             Box(Modifier.clickable {
                 starColor = 1
+                visible = true
                 Log.i("AAA", "Blue box clicked.")}
             ) {
                 Canvas(modifier = Modifier
@@ -223,6 +236,7 @@ fun StarChangeColor() {
             }
             Box(Modifier.clickable {
                 starColor = 2
+                visible = true
                 Log.i("AAA", "Green box clicked.")}
             ) {
                 Canvas(modifier = Modifier
@@ -265,6 +279,7 @@ fun StarChangeColor() {
             }
             Box(Modifier.clickable {
                 starColor = 3
+                visible = true
                 Log.i("AAA", "Red box clicked.")}
             ) {
                 Canvas(modifier = Modifier
