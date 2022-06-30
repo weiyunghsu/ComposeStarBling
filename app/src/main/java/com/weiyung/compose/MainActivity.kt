@@ -59,10 +59,9 @@ fun StarChangeColor() {
         var starColor by remember { mutableStateOf(0) }
         var starRotateStatus by remember{ mutableStateOf(0)}
 
-        var flag by remember { mutableStateOf(true) }
-        val rotation = remember { Animatable(0f) }
+        var rotation = remember { Animatable(0f) }
         val scope = rememberCoroutineScope()
-        val rotationValue = rotation.value.toInt()
+        var rotationValue = rotation.value.toInt()
 
         var offsetX by remember { mutableStateOf(0f) }
         var offsetY by remember { mutableStateOf(0f) }
@@ -73,6 +72,7 @@ fun StarChangeColor() {
                     color = Transparent,
                 )
             })
+        Text(text = "[${offsetX.toInt()}, ${offsetY.toInt()}]")
         Text(text = "$rotationValue")
         IconButton(
             modifier = Modifier
@@ -138,6 +138,14 @@ fun StarChangeColor() {
                 onClick = {
                     starStatus = 0
                     starColor = 0
+                    offsetX = 0F
+                    offsetY = 0F
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = 0F,
+                            animationSpec = tween(0, easing = LinearEasing)
+                        )
+                    }
                     Log.d("AAA", "button default clicked.")},
                 colors = ButtonDefaults.buttonColors(
                     Transparent,
