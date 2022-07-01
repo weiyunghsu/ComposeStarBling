@@ -11,6 +11,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -69,6 +71,9 @@ fun StarChangeColor() {
 
         var visible by remember { mutableStateOf(true) }
 
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed by interactionSource.collectIsPressedAsState()
+
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
@@ -83,7 +88,19 @@ fun StarChangeColor() {
                 .width(80.dp)
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
                 .pointerInput(Unit) {
-                    detectDragGestures { change, dragAmount ->
+                    detectDragGestures(
+                        onDragStart = {
+                            offsetX = 0F
+                            offsetY = 0F
+                        },
+                        onDragEnd = {
+                            offsetX = 0F
+                            offsetY = 0F
+                        },
+                        onDragCancel = {
+                            offsetX = 0F
+                            offsetY = 0F
+                        }) { change, dragAmount ->
                         change.consume()
                         offsetX += dragAmount.x
                         offsetY += dragAmount.y
@@ -94,6 +111,7 @@ fun StarChangeColor() {
                 starStatus = 1
                 visible = true
                 Log.d("AAA","Star clicked.")},
+            interactionSource = interactionSource
         ) {
             Icon(
                 painter = painterResource(
