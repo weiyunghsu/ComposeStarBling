@@ -104,7 +104,6 @@ fun StarChangeColor() {
                         change.consume()
                         offsetX += dragAmount.x
                         offsetY += dragAmount.y
-                        visible = true
                     }
                 },
             onClick = {
