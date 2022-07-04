@@ -30,6 +30,8 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -55,6 +57,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun StarChangeColor() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -74,15 +77,21 @@ fun StarChangeColor() {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed by interactionSource.collectIsPressedAsState()
 
+        // Just a Padding
         Canvas(modifier = Modifier.size(20.dp),
             onDraw = {
                 drawRect(
                     color = Transparent,
                 )
             })
+        // tell you where's the star position
         Text(text = "[${offsetX.toInt()}, ${offsetY.toInt()}]")
+        // tell you now what's the rotation value
         Text(text = "$rotationValue")
+        // the star
+
         IconButton(
+
             modifier = Modifier
                 .height(80.dp)
                 .width(80.dp)
@@ -110,7 +119,7 @@ fun StarChangeColor() {
                 starStatus = 1
                 visible = true
                 Log.d("AAA","Star clicked.")},
-            interactionSource = interactionSource
+            interactionSource = interactionSource,
         ) {
             Icon(
                 painter = painterResource(
@@ -129,10 +138,11 @@ fun StarChangeColor() {
                     3 -> Red
                     else -> { }
                 } as Color,
-                contentDescription = null
+                contentDescription = null,
             )
         }
 
+        // rotation icon
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically) {
@@ -205,10 +215,12 @@ fun StarChangeColor() {
             }
         }
 
+        // color box icon
         Row(modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly) {
+
             Box(Modifier.clickable {
                 starColor = 1
                 visible = true
@@ -222,35 +234,7 @@ fun StarChangeColor() {
                             color = Blue,
                         )
                     })
-                Canvas(modifier = Modifier.size(80.dp),
-                    onDraw = {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = 0F, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = canvasWidth, y = 0F),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = canvasWidth, y = 0F),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = canvasHeight),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                    })
+                drawRectLines()
             }
             Box(Modifier.clickable {
                 starColor = 2
@@ -265,35 +249,7 @@ fun StarChangeColor() {
                             color = Green,
                         )
                     })
-                Canvas(modifier = Modifier.size(80.dp),
-                    onDraw = {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = 0F, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = canvasWidth, y = 0F),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = canvasWidth, y = 0F),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = canvasHeight),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                    })
+                drawRectLines()
             }
             Box(Modifier.clickable {
                 starColor = 3
@@ -308,41 +264,44 @@ fun StarChangeColor() {
                             color = Red,
                         )
                     })
-                Canvas(modifier = Modifier
-                    .size(80.dp),
-                    onDraw = {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = 0F, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = 0F),
-                            end = Offset(x = canvasWidth, y = 0F),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = canvasWidth, y = 0F),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                        drawLine(
-                            start = Offset(x = 0F, y = canvasHeight),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = Black,
-                            strokeWidth = 5F
-                        )
-                    })
+                drawRectLines()
             }
         }
     }
 }
-
+@Composable
+fun drawRectLines(){
+    Canvas(modifier = Modifier
+        .size(80.dp),
+        onDraw = {
+            val canvasWidth = size.width
+            val canvasHeight = size.height
+            drawLine(
+                start = Offset(x = 0F, y = 0F),
+                end = Offset(x = 0F, y = canvasHeight),
+                color = Black,
+                strokeWidth = 5F
+            )
+            drawLine(
+                start = Offset(x = 0F, y = 0F),
+                end = Offset(x = canvasWidth, y = 0F),
+                color = Black,
+                strokeWidth = 5F
+            )
+            drawLine(
+                start = Offset(x = canvasWidth, y = 0F),
+                end = Offset(x = canvasWidth, y = canvasHeight),
+                color = Black,
+                strokeWidth = 5F
+            )
+            drawLine(
+                start = Offset(x = 0F, y = canvasHeight),
+                end = Offset(x = canvasWidth, y = canvasHeight),
+                color = Black,
+                strokeWidth = 5F
+            )
+        })
+}
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
