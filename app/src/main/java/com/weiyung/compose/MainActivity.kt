@@ -63,7 +63,7 @@ fun StarChangeColor() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         var starStatus by remember { mutableStateOf(0) }
         var starColor by remember { mutableStateOf(0) }
-        var starRotateStatus by remember{ mutableStateOf(0)}
+        var starRotateStatus by remember { mutableStateOf(0) }
 
         val rotation = remember { Animatable(0f) }
         val scope = rememberCoroutineScope()
@@ -91,7 +91,6 @@ fun StarChangeColor() {
         // the star
 
         IconButton(
-
             modifier = Modifier
                 .height(80.dp)
                 .width(80.dp)
@@ -118,14 +117,15 @@ fun StarChangeColor() {
             onClick = {
                 starStatus = 1
                 visible = true
-                Log.d("AAA","Star clicked.")},
+                Log.d("AAA", "Star clicked.")
+            },
             interactionSource = interactionSource,
         ) {
             Icon(
                 painter = painterResource(
                     if (starStatus == 0) StarSelected.Star.icon
                     else StarSelected.Star.iconSelected
-                        ),
+                ),
                 modifier = Modifier
                     .height(80.dp)
                     .width(80.dp)
@@ -136,16 +136,18 @@ fun StarChangeColor() {
                     1 -> Blue
                     2 -> Green
                     3 -> Red
-                    else -> { }
+                    else -> {}
                 } as Color,
                 contentDescription = null,
             )
         }
 
         // rotation icon
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             IconButton(
                 modifier = Modifier
                     .height(48.dp)
@@ -158,7 +160,8 @@ fun StarChangeColor() {
                         )
                     }
                     visible = true
-                    Log.d("AAA","Undo clicked.")}
+                    Log.d("AAA", "Undo clicked.")
+                }
 
             ) {
                 Icon(
@@ -168,7 +171,8 @@ fun StarChangeColor() {
                 )
             }
             AnimatedVisibility(
-                visible = visible){
+                visible = visible
+            ) {
                 visible = !(((starStatus == 0) && (starColor == 0)
                         && (offsetX == 0f) && (offsetY == 0f) && (rotation.targetValue == 0F)))
                 Button(
@@ -184,7 +188,8 @@ fun StarChangeColor() {
                             )
                         }
                         visible = false
-                        Log.d("AAA", "button default clicked.")},
+                        Log.d("AAA", "button default clicked.")
+                    },
                     colors = ButtonDefaults.buttonColors(
                         Transparent,
                         contentColor = Purple40
@@ -205,7 +210,8 @@ fun StarChangeColor() {
                         )
                     }
                     visible = true
-                    Log.d("AAA","Redo clicked.")},
+                    Log.d("AAA", "Redo clicked.")
+                },
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_redo),
@@ -216,15 +222,18 @@ fun StarChangeColor() {
         }
 
         // color box icon
-        Row(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly) {
+        Row(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
 
             Box(Modifier.clickable {
                 starColor = 1
                 visible = true
-                Log.i("AAA", "Blue box clicked.")}
+                Log.i("AAA", "Blue box clicked.")
+            }
             ) {
                 Canvas(modifier = Modifier
                     .size(80.dp)
@@ -239,7 +248,8 @@ fun StarChangeColor() {
             Box(Modifier.clickable {
                 starColor = 2
                 visible = true
-                Log.i("AAA", "Green box clicked.")}
+                Log.i("AAA", "Green box clicked.")
+            }
             ) {
                 Canvas(modifier = Modifier
                     .size(80.dp)
@@ -254,7 +264,8 @@ fun StarChangeColor() {
             Box(Modifier.clickable {
                 starColor = 3
                 visible = true
-                Log.i("AAA", "Red box clicked.")}
+                Log.i("AAA", "Red box clicked.")
+            }
             ) {
                 Canvas(modifier = Modifier
                     .size(80.dp)
@@ -269,8 +280,9 @@ fun StarChangeColor() {
         }
     }
 }
+
 @Composable
-fun drawRectLines(){
+fun drawRectLines() {
     Canvas(modifier = Modifier
         .size(80.dp),
         onDraw = {
@@ -302,6 +314,7 @@ fun drawRectLines(){
             )
         })
 }
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -309,6 +322,7 @@ fun DefaultPreview() {
         StarChangeColor()
     }
 }
+
 sealed class StarSelected(val icon: Int, val iconSelected: Int) {
     object Star : StarSelected(R.drawable.ic_icon_star0, R.drawable.ic_icon_star1)
 }
