@@ -13,7 +13,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
-
+/*
 internal val LocalDragTargetInfo = compositionLocalOf { DragTargetInfo() }
 
 @Composable
@@ -112,3 +112,4 @@ internal class DragTargetInfo {
     var draggableComposable by mutableStateOf<(@Composable (isInBound:Int) -> Unit)?>(null)
 //    var dataToDrop by mutableStateOf<Any?>(null)
 }
+*/

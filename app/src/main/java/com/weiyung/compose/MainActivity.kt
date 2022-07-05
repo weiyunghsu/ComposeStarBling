@@ -88,223 +88,193 @@ fun StarChangeColor() {
         // tell you now what's the rotation value
         Text(text = "$rotationValue")
         // the star
-        PressDraggable(modifier = Modifier.fillMaxSize()) {
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-                Row(horizontalArrangement = Arrangement.Center) {
-
-                    Box(modifier = Modifier) {
-
-                        DragTarget(modifier = Modifier) {
-//                            when (it) {
-//                                0 -> starColor = 0
-//                                1 -> starColor = 1
-//                                2 -> starColor = 2
-//                                3 -> starColor = 3
-//                                else -> {}
-//                            }
-
-                            IconButton(
-                                modifier = Modifier
-                                    .height(80.dp)
-                                    .width(80.dp)
-                                    .offset {
-                                        IntOffset(
-                                            offsetX.roundToInt(),
-                                            offsetY.roundToInt()
-                                        )
-                                    }
-                                    .pointerInput(Unit) {
-                                        detectDragGestures(
-                                            onDragStart = {
-                                                offsetX = 0F
-                                                offsetY = 0F
-                                            },
-                                            onDragEnd = {
-                                                offsetX = 0F
-                                                offsetY = 0F
-                                            },
-                                            onDragCancel = {
-                                                offsetX = 0F
-                                                offsetY = 0F
-                                            }) { change, dragAmount ->
-                                            change.consume()
-                                            offsetX += dragAmount.x
-                                            offsetY += dragAmount.y
-                                        }
-                                    },
-                                onClick = {
-                                    starStatus = 1
-                                    visible = true
-                                    Log.d("AAA", "Star clicked.")
-                                },
-                                interactionSource = interactionSource,
-                            ) {
-
-                                Icon(
-                                    painter = painterResource(
-                                        if (starStatus == 0) StarSelected.Star.icon
-                                        else StarSelected.Star.iconSelected
-                                    ),
-                                    modifier = Modifier
-                                        .height(80.dp)
-                                        .width(80.dp)
-                                        .rotate(rotation.value),
-                                    tint =
-                                    when (starColor) {
-                                        0 -> Magenta
-                                        1 -> Blue
-                                        2 -> Green
-                                        3 -> Red
-                                        else -> {}
-                                    } as Color,
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // rotation icon
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(
-                        modifier = Modifier
-                            .height(48.dp)
-                            .width(48.dp),
-                        onClick = {
-                            scope.launch {
-                                rotation.animateTo(
-                                    targetValue = rotation.targetValue - 30,
-                                    animationSpec = tween(500, easing = LinearEasing)
-                                )
-                            }
-                            visible = true
-                            Log.d("AAA", "Undo clicked.")
-                        }
-
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_undo),
-                            modifier = Modifier.padding(8.dp),
-                            contentDescription = null
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = visible
-                    ) {
-                        visible = !(((starStatus == 0) && (starColor == 0)
-                                && (offsetX == 0f) && (offsetY == 0f) && (rotation.targetValue == 0F)))
-                        Button(
-                            onClick = {
-                                starStatus = 0
-                                starColor = 0
-                                offsetX = 0F
-                                offsetY = 0F
-                                scope.launch {
-                                    rotation.animateTo(
-                                        targetValue = 0F,
-                                        animationSpec = tween(0, easing = LinearEasing)
-                                    )
-                                }
-                                visible = false
-                                Log.d("AAA", "button default clicked.")
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                Transparent,
-                                contentColor = Purple40
-                            ),
-                        ) {
-                            Text("default")
-                        }
-                    }
-                    IconButton(
-                        modifier = Modifier
-                            .height(48.dp)
-                            .width(48.dp),
-                        onClick = {
-                            scope.launch {
-                                rotation.animateTo(
-                                    targetValue = rotation.targetValue + 30,
-                                    animationSpec = tween(500, easing = LinearEasing)
-                                )
-                            }
-                            visible = true
-                            Log.d("AAA", "Redo clicked.")
+        IconButton(
+            modifier = Modifier
+                .height(80.dp)
+                .width(80.dp)
+                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .pointerInput(Unit) {
+                    detectDragGestures(
+                        onDragStart = {
+                            offsetX = 0F
+                            offsetY = 0F
                         },
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_redo),
-                            modifier = Modifier.padding(8.dp),
-                            contentDescription = null
+                        onDragEnd = {
+                            offsetX = 0F
+                            offsetY = 0F
+                        },
+                        onDragCancel = {
+                            offsetX = 0F
+                            offsetY = 0F
+                        }) { change, dragAmount ->
+                        change.consume()
+                        offsetX += dragAmount.x
+                        offsetY += dragAmount.y
+                    }
+                },
+            onClick = {
+                starStatus = 1
+                visible = true
+                Log.d("AAA", "Star clicked.")
+            },
+            interactionSource = interactionSource,
+        ) {
+            Icon(
+                painter = painterResource(
+                    if (starStatus == 0) StarSelected.Star.icon
+                    else StarSelected.Star.iconSelected
+                ),
+                modifier = Modifier
+                    .height(80.dp)
+                    .width(80.dp)
+                    .rotate(rotation.value),
+                tint =
+                when (starColor) {
+                    0 -> Magenta
+                    1 -> Blue
+                    2 -> Green
+                    3 -> Red
+                    else -> {}
+                } as Color,
+                contentDescription = null,
+            )
+        }
+
+        // rotation icon
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(48.dp),
+                onClick = {
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = rotation.targetValue - 30,
+                            animationSpec = tween(500, easing = LinearEasing)
                         )
                     }
+                    visible = true
+                    Log.d("AAA", "Undo clicked.")
                 }
 
-                // color box icon
-                DropTarget(modifier = Modifier) {
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-
-                        Box(Modifier.clickable {
-                            starColor = 1
-                            visible = true
-                            Log.i("AAA", "Blue box clicked.")
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_undo),
+                    modifier = Modifier.padding(8.dp),
+                    contentDescription = null
+                )
+            }
+            AnimatedVisibility(
+                visible = visible
+            ) {
+                visible = !(((starStatus == 0) && (starColor == 0)
+                        && (offsetX == 0f) && (offsetY == 0f) && (rotation.targetValue == 0F)))
+                Button(
+                    onClick = {
+                        starStatus = 0
+                        starColor = 0
+                        offsetX = 0F
+                        offsetY = 0F
+                        scope.launch {
+                            rotation.animateTo(
+                                targetValue = 0F,
+                                animationSpec = tween(0, easing = LinearEasing)
+                            )
                         }
-                        ) {
-                            Canvas(modifier = Modifier
-                                .size(80.dp)
-                                .padding(8.dp),
-                                onDraw = {
-                                    drawRect(
-                                        color = Blue,
-                                    )
-                                })
-                            drawRectLines()
-                        }
-                        Box(Modifier.clickable {
-                            starColor = 2
-                            visible = true
-                            Log.i("AAA", "Green box clicked.")
-                        }
-                        ) {
-                            Canvas(modifier = Modifier
-                                .size(80.dp)
-                                .padding(8.dp),
-                                onDraw = {
-                                    drawRect(
-                                        color = Green,
-                                    )
-                                })
-                            drawRectLines()
-                        }
-                        Box(Modifier.clickable {
-                            starColor = 3
-                            visible = true
-                            Log.i("AAA", "Red box clicked.")
-                        }
-                        ) {
-                            Canvas(modifier = Modifier
-                                .size(80.dp)
-                                .padding(8.dp),
-                                onDraw = {
-                                    drawRect(
-                                        color = Red,
-                                    )
-                                })
-                            drawRectLines()
-                        }
+                        visible = false
+                        Log.d("AAA", "button default clicked.")
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        Transparent,
+                        contentColor = Purple40
+                    ),
+                ) {
+                    Text("default")
+                }
+            }
+            IconButton(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(48.dp),
+                onClick = {
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = rotation.targetValue + 30,
+                            animationSpec = tween(500, easing = LinearEasing)
+                        )
                     }
-                }
+                    visible = true
+                    Log.d("AAA", "Redo clicked.")
+                },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_redo),
+                    modifier = Modifier.padding(8.dp),
+                    contentDescription = null
+                )
+            }
+        }
+
+        // color box icon
+        Row(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            Box(Modifier.clickable {
+                starColor = 1
+                visible = true
+                Log.i("AAA", "Blue box clicked.")
+            }
+            ) {
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
+                    onDraw = {
+                        drawRect(
+                            color = Blue,
+                        )
+                    })
+                drawRectLines()
+            }
+            Box(Modifier.clickable {
+                starColor = 2
+                visible = true
+                Log.i("AAA", "Green box clicked.")
+            }
+            ) {
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
+                    onDraw = {
+                        drawRect(
+                            color = Green,
+                        )
+                    })
+                drawRectLines()
+            }
+            Box(Modifier.clickable {
+                starColor = 3
+                visible = true
+                Log.i("AAA", "Red box clicked.")
+            }
+            ) {
+                Canvas(modifier = Modifier
+                    .size(80.dp)
+                    .padding(8.dp),
+                    onDraw = {
+                        drawRect(
+                            color = Red,
+                        )
+                    })
+                drawRectLines()
             }
         }
     }
