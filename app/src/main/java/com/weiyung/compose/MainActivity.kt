@@ -97,13 +97,13 @@ fun StarChangeColor() {
                     Box(modifier = Modifier) {
 
                         DragTarget(modifier = Modifier) {
-                            when (it) {
-                                0 -> starColor = 0
-                                1 -> starColor = 1
-                                2 -> starColor = 2
-                                3 -> starColor = 3
-                                else -> {}
-                            }
+//                            when (it) {
+//                                0 -> starColor = 0
+//                                1 -> starColor = 1
+//                                2 -> starColor = 2
+//                                3 -> starColor = 3
+//                                else -> {}
+//                            }
 
                             IconButton(
                                 modifier = Modifier
