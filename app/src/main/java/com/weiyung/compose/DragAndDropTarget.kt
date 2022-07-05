@@ -59,9 +59,7 @@ fun DragTarget(
 ) {
     var currentPosition by remember { mutableStateOf(Offset.Zero) }
     val currentState = LocalDragTargetInfo.current
-    val isCurrentDrag by remember {
-        mutableStateOf(0)
-    }
+    val isCurrentDrag by remember { mutableStateOf(0) }
 
     Box(modifier = modifier
         .onGloballyPositioned {
@@ -73,7 +71,7 @@ fun DragTarget(
                 currentState.dragPosition = currentPosition + it
                 currentState.draggableComposable = content
             }, onDrag = { change, dragAmount ->
-                change.consumeAllChanges()
+                change.consume()
                 currentState.dragOffset += Offset(dragAmount.x, dragAmount.y)
             }, onDragEnd = {
                 currentState.isDragging = false
@@ -96,9 +94,7 @@ fun DropTarget(
     val dragInfo = LocalDragTargetInfo.current
     val dragPosition = dragInfo.dragPosition
     val dragOffset = dragInfo.dragOffset
-    var isCurrentDropTarget by remember {
-        mutableStateOf(false)
-    }
+    var isCurrentDropTarget by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.onGloballyPositioned {
         it.boundsInWindow().let { rect ->

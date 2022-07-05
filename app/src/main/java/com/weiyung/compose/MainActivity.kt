@@ -63,7 +63,6 @@ fun StarChangeColor() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         var starStatus by remember { mutableStateOf(0) }
         var starColor by remember { mutableStateOf(0) }
-        var starRotateStatus by remember { mutableStateOf(0) }
 
         val rotation = remember { Animatable(0f) }
         val scope = rememberCoroutineScope()
@@ -94,67 +93,75 @@ fun StarChangeColor() {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Row(horizontalArrangement = Arrangement.Center) {
-                    DragTarget(modifier = Modifier) { moveColor ->
-                        val moveTheColor =
-                            when (moveColor) {
-                                0 -> Magenta
-                                1 -> Blue
-                                2 -> Green
-                                3 -> Red
+
+                    Box(modifier = Modifier) {
+
+                        DragTarget(modifier = Modifier) {
+                            when (it) {
+                                0 -> starColor = 0
+                                1 -> starColor = 1
+                                2 -> starColor = 2
+                                3 -> starColor = 3
                                 else -> {}
                             }
 
-                        IconButton(
-                            modifier = Modifier
-                                .height(80.dp)
-                                .width(80.dp)
-                                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                                .pointerInput(Unit) {
-                                    detectDragGestures(
-                                        onDragStart = {
-                                            offsetX = 0F
-                                            offsetY = 0F
-                                        },
-                                        onDragEnd = {
-                                            offsetX = 0F
-                                            offsetY = 0F
-                                        },
-                                        onDragCancel = {
-                                            offsetX = 0F
-                                            offsetY = 0F
-                                        }) { change, dragAmount ->
-                                        change.consume()
-                                        offsetX += dragAmount.x
-                                        offsetY += dragAmount.y
-                                    }
-                                },
-                            onClick = {
-                                starStatus = 1
-                                visible = true
-                                Log.d("AAA", "Star clicked.")
-                            },
-                            interactionSource = interactionSource,
-                        ) {
-
-                            Icon(
-                                painter = painterResource(
-                                    if (starStatus == 0) StarSelected.Star.icon
-                                    else StarSelected.Star.iconSelected
-                                ),
+                            IconButton(
                                 modifier = Modifier
                                     .height(80.dp)
                                     .width(80.dp)
-                                    .rotate(rotation.value),
-                                tint =
-                                when (starColor) {
-                                    0 -> Magenta
-                                    1 -> Blue
-                                    2 -> Green
-                                    3 -> Red
-                                    else -> {}
-                                } as Color,
-                                contentDescription = null,
-                            )
+                                    .offset {
+                                        IntOffset(
+                                            offsetX.roundToInt(),
+                                            offsetY.roundToInt()
+                                        )
+                                    }
+                                    .pointerInput(Unit) {
+                                        detectDragGestures(
+                                            onDragStart = {
+                                                offsetX = 0F
+                                                offsetY = 0F
+                                            },
+                                            onDragEnd = {
+                                                offsetX = 0F
+                                                offsetY = 0F
+                                            },
+                                            onDragCancel = {
+                                                offsetX = 0F
+                                                offsetY = 0F
+                                            }) { change, dragAmount ->
+                                            change.consume()
+                                            offsetX += dragAmount.x
+                                            offsetY += dragAmount.y
+                                        }
+                                    },
+                                onClick = {
+                                    starStatus = 1
+                                    visible = true
+                                    Log.d("AAA", "Star clicked.")
+                                },
+                                interactionSource = interactionSource,
+                            ) {
+
+                                Icon(
+                                    painter = painterResource(
+                                        if (starStatus == 0) StarSelected.Star.icon
+                                        else StarSelected.Star.iconSelected
+                                    ),
+                                    modifier = Modifier
+                                        .height(80.dp)
+                                        .width(80.dp)
+                                        .rotate(rotation.value),
+                                    tint =
+                                    when (starColor) {
+                                        0 -> Magenta
+                                        1 -> Blue
+                                        2 -> Green
+                                        3 -> Red
+                                        else -> {}
+                                    } as Color,
+                                    contentDescription = null,
+                                )
+                            }
                         }
                     }
                 }
@@ -239,60 +246,63 @@ fun StarChangeColor() {
                 }
 
                 // color box icon
-                Row(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
+                DropTarget(modifier = Modifier) {
 
-                    Box(Modifier.clickable {
-                        starColor = 1
-                        visible = true
-                        Log.i("AAA", "Blue box clicked.")
-                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Canvas(modifier = Modifier
-                            .size(80.dp)
-                            .padding(8.dp),
-                            onDraw = {
-                                drawRect(
-                                    color = Blue,
-                                )
-                            })
-                        drawRectLines()
-                    }
-                    Box(Modifier.clickable {
-                        starColor = 2
-                        visible = true
-                        Log.i("AAA", "Green box clicked.")
-                    }
-                    ) {
-                        Canvas(modifier = Modifier
-                            .size(80.dp)
-                            .padding(8.dp),
-                            onDraw = {
-                                drawRect(
-                                    color = Green,
-                                )
-                            })
-                        drawRectLines()
-                    }
-                    Box(Modifier.clickable {
-                        starColor = 3
-                        visible = true
-                        Log.i("AAA", "Red box clicked.")
-                    }
-                    ) {
-                        Canvas(modifier = Modifier
-                            .size(80.dp)
-                            .padding(8.dp),
-                            onDraw = {
-                                drawRect(
-                                    color = Red,
-                                )
-                            })
-                        drawRectLines()
+
+                        Box(Modifier.clickable {
+                            starColor = 1
+                            visible = true
+                            Log.i("AAA", "Blue box clicked.")
+                        }
+                        ) {
+                            Canvas(modifier = Modifier
+                                .size(80.dp)
+                                .padding(8.dp),
+                                onDraw = {
+                                    drawRect(
+                                        color = Blue,
+                                    )
+                                })
+                            drawRectLines()
+                        }
+                        Box(Modifier.clickable {
+                            starColor = 2
+                            visible = true
+                            Log.i("AAA", "Green box clicked.")
+                        }
+                        ) {
+                            Canvas(modifier = Modifier
+                                .size(80.dp)
+                                .padding(8.dp),
+                                onDraw = {
+                                    drawRect(
+                                        color = Green,
+                                    )
+                                })
+                            drawRectLines()
+                        }
+                        Box(Modifier.clickable {
+                            starColor = 3
+                            visible = true
+                            Log.i("AAA", "Red box clicked.")
+                        }
+                        ) {
+                            Canvas(modifier = Modifier
+                                .size(80.dp)
+                                .padding(8.dp),
+                                onDraw = {
+                                    drawRect(
+                                        color = Red,
+                                    )
+                                })
+                            drawRectLines()
+                        }
                     }
                 }
             }
