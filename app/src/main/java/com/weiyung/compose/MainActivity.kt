@@ -111,6 +111,18 @@ fun StarChangeColor() {
                         change.consume()
                         offsetX += dragAmount.x
                         offsetY += dragAmount.y
+                        Log.d("AAA", "$offsetX, ${dragAmount.x}")
+                        Log.d("BBB", "$offsetY, ${dragAmount.y}")
+                        if (offsetX in -430F..-230F && offsetY in 230F..430F) {
+                            starColor = 1
+                            visible = true
+                        } else if (offsetX in -90F..120F && offsetY in 230F..430F) {
+                            starColor = 2
+                            visible = true
+                        } else if (offsetX in 210F..430F && offsetY in 230F..430F) {
+                            starColor = 3
+                            visible = true
+                        }
                     }
                 },
             onClick = {
